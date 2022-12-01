@@ -1,9 +1,13 @@
 package day1;
 
+// Linux
+// /home/nafdez/git/adventOfCode2022/adventOfCode2022/src/day1/part1_Input.txt
+// Windows
+// C:/Users/Nacho/git/adventOfCode2022/adventOfCode2022/src/day1/part1_Input.txt
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -11,7 +15,7 @@ public class Part1_Solution {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		try{
-			FileInputStream file = new FileInputStream("/home/nafdez/git/adventOfCode2022/adventOfCode2022/src/day1/part1_Input.txt");
+			FileInputStream file = new FileInputStream("C:/Users/Nacho/git/adventOfCode2022/adventOfCode2022/src/day1/part1_Input.txt");
 	        Scanner scanner = new Scanner(file);
 	        Vector<String> data = new Vector<String>();
 	        while (scanner.hasNextLine()){
@@ -20,7 +24,8 @@ public class Part1_Solution {
 	        }
 	        scanner.close();
 	        
-	        System.out.println(Arrays.toString(insercionDirecta(elfsSum(data))));
+	        int[] resultado = insercionDirecta(elfsSum(data));
+	        System.out.println("El elfo con más calorías es: "+resultado[resultado.length-1]);
 
 		} catch(IOException e){
 	        e.printStackTrace();
