@@ -37,7 +37,7 @@ public class Part1_Solution {
 				};
 		
 		try{
-			FileInputStream file = new FileInputStream("C:/Users/Nacho/git/adventOfCode2022/adventOfCode2022/src/day2/Input.txt");
+			FileInputStream file = new FileInputStream("/home/nafdez/git/adventOfCode2022/adventOfCode2022/src/day2/Input_test.txt");
 	        Scanner scanner = new Scanner(file);
 	        Vector<String> data = new Vector<String>();
 	        while (scanner.hasNextLine()){
