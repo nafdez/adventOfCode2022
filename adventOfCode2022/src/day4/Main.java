@@ -12,7 +12,7 @@ public class Main {
 		int c = 0;
 		try {
 			FileInputStream file = new FileInputStream(
-					"/home/nafdez/git/adventOfCode2022/adventOfCode2022/src/day4/Input.txt");
+					"C:/Users/Nacho/git/adventOfCode2022/adventOfCode2022/src/day4/Input.txt");
 			Scanner scanner = new Scanner(file);
 			Vector<String> data = new Vector<>();
 			while (scanner.hasNext()) {
@@ -31,7 +31,7 @@ public class Main {
 				if (fullyOverlaps(intData, i))
 					fullOverlaps++;
 				
-				if (overlaps(par1, par2, intData, i))
+				if (searchInIndex(par1, par2))
 					partOverlaps++;
 			}
 			
@@ -89,6 +89,26 @@ public class Main {
 		else if(intData[i][0]>=intData[i][2] && intData[i][1]<=intData[i][3])
 			return true;
 		return false;
+	}
+	
+	static boolean searchInIndex(String str01, String str02) {
+		int l = str02.length();
+		if (str01.length() > str02.length())
+			l = str01.length();
+
+		int c2 = 0;
+		int c = 0;
+		for (int j = 0; j < str02.length(); j++) {
+			try {
+				c2 = str01.charAt(str01.indexOf(str02.charAt(j)));
+				if(c2!=-1)
+					return true;
+			} catch (StringIndexOutOfBoundsException e) {
+				c--;
+			}
+		}
+		return false;
+
 	}
 
 }
