@@ -31,7 +31,7 @@ public class Main {
 				if (fullyOverlaps(intData, i))
 					fullOverlaps++;
 				
-				if (searchInIndex(par1, par2))
+				if (overlaps(par1, par2, intData, i))
 					partOverlaps++;
 			}
 			
@@ -77,9 +77,9 @@ public class Main {
 
 	static boolean overlaps(String par1, String par2, int[][] data, int i) {
 		if (par1.contains(String.valueOf(data[i][2])) || par1.contains(String.valueOf(data[i][3])))
-			return true;
+			return true; // Comprueba si el primer valor está entre los de el compañero
 		else if (par2.contains(String.valueOf(data[i][0])) || par2.contains(String.valueOf(data[i][1])))
-			return true;
+			return true; // Lo mismo que antes, pero al revés
 		return false;
 	}
 	
@@ -91,11 +91,13 @@ public class Main {
 		return false;
 	}
 	
+	
+	// NO SIRVE
 	static boolean searchInIndex(String str01, String str02) {
 		int c2 = 0;
 		for (int j = 0; j < str02.length(); j++) {
 			try {
-				c2 = str01.charAt(str01.indexOf(str02.charAt(j)));
+				c2 = str01.indexOf(str02.charAt(j));
 				if(c2!=-1)
 					return true;
 			} catch (StringIndexOutOfBoundsException e) {
