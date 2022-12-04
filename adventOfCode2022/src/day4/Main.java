@@ -92,19 +92,13 @@ public class Main {
 	}
 	
 	static boolean searchInIndex(String str01, String str02) {
-		int l = str02.length();
-		if (str01.length() > str02.length())
-			l = str01.length();
-
 		int c2 = 0;
-		int c = 0;
 		for (int j = 0; j < str02.length(); j++) {
 			try {
 				c2 = str01.charAt(str01.indexOf(str02.charAt(j)));
 				if(c2!=-1)
 					return true;
 			} catch (StringIndexOutOfBoundsException e) {
-				c--;
 			}
 		}
 		return false;
