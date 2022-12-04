@@ -12,7 +12,7 @@ public class Main {
 		int c = 0;
 		try {
 			FileInputStream file = new FileInputStream(
-					"C:/Users/Nacho/git/adventOfCode2022/adventOfCode2022/src/day4/Input_test.txt");
+					"/home/nafdez/git/adventOfCode2022/adventOfCode2022/src/day4/Input.txt");
 			Scanner scanner = new Scanner(file);
 			Vector<String> data = new Vector<>();
 			while (scanner.hasNext()) {
@@ -31,12 +31,12 @@ public class Main {
 				if (fullyOverlaps(intData, i))
 					fullOverlaps++;
 				
-				if (overlaps(par1, par2))
+				if (overlaps(par1, par2, intData, i))
 					partOverlaps++;
 			}
 			
 			System.out.println("La cantidad de superposiciones TOTALES entre las parejas son: " + fullOverlaps);
-			System.out.println("La cantidad de superposiciones entre las parejas son: " + partOverlaps);
+			System.out.println("La cantidad de superposiciones entre las parejas son: " + (partOverlaps));
 
 			scanner.close();
 		} catch (IOException e) {
@@ -75,8 +75,10 @@ public class Main {
 		return zone;
 	}
 
-	static boolean overlaps(String par1, String par2) {
-		if (par1.contains(par2) || par2.contains(par1))
+	static boolean overlaps(String par1, String par2, int[][] data, int i) {
+		if (par1.contains(String.valueOf(data[i][2])) || par1.contains(String.valueOf(data[i][3])))
+			return true;
+		else if (par2.contains(String.valueOf(data[i][0])) || par2.contains(String.valueOf(data[i][1])))
 			return true;
 		return false;
 	}
