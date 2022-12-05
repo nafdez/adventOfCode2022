@@ -76,17 +76,17 @@ public class Main {
 	}
 
 	static boolean overlaps(String par1, String par2, int[][] data, int i) {
-		if (par1.contains(String.valueOf(data[i][2])) || par1.contains(String.valueOf(data[i][3])))
+		if (data[i][0]>data[i][2]||data[i][0]<data[i][3] && data[i][1]>data[i][2]&&data[i][0]<data[i][3])
 			return true; // Comprueba si el primer valor está entre los de el compañero
-		else if (par2.contains(String.valueOf(data[i][0])) || par2.contains(String.valueOf(data[i][1])))
+		else if (data[i][2]>data[i][0]||data[i][2]<data[i][1] && data[i][3]>data[i][0]&&data[i][0]<data[i][1])
 			return true; // Lo mismo que antes, pero al revés
 		return false;
 	}
 	
 	static boolean fullyOverlaps(int[][] intData, int i) {
-		if (intData[i][0]<=intData[i][2] && intData[i][1]>=intData[i][3])
+		if (intData[i][0]<=intData[i][2] || intData[i][1]>=intData[i][3])
 			return true;
-		else if(intData[i][0]>=intData[i][2] && intData[i][1]<=intData[i][3])
+		else if(intData[i][0]>=intData[i][2] || intData[i][1]<=intData[i][3])
 			return true;
 		return false;
 	}
