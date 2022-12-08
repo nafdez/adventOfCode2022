@@ -7,98 +7,79 @@ import java.util.Scanner;
 import java.util.Vector;
 
 public class Solution {
-	
-	public static class node {
-		int size;
-		String name;
-		boolean dir;
-		
-		public node(int size, String name, boolean dir) {
-			this.size=size;
-			this.name=name;
-			this.dir=dir;
-		}
-		
-		public int getSize() {
-			return size;
-		}
-		
-		public int updateSize(int n) {
-				size = n;
-			return size;
-		}
-		
-		public String getName() {
-			return name; 
-		}
-		
-		public String updateName(String n) {
-				name = n;
-			return name;
-		}
-		
-	}
-	
-	public static class cmd {
-		String type;
-		
-		public cmd(String type) {
-			this.type = type;
-		}
-		
-		public String getType() {
-			return type;
-		}
-		
-	}
 
 	public static void main(String[] args) throws FileNotFoundException {
 //		node in = new node(12, "f", false);
-		FileInputStream f = new FileInputStream("/home/nafdez/git/adventOfCode2022/adventOfCode2022/src/day7/Input_test.txt");
-		Scanner sc = new Scanner(f);
-		Vector<String> data = new Vector<>();
-		while(sc.hasNextLine()) {
-			data = parser(sc, data, "");
+		FileInputStream f = new FileInputStream(
+				"C:/Users/Nacho/git/adventOfCode2022/adventOfCode2022/src/day7/Input_test.txt");
+		Scanner sc = new Scanner(f);		
+		node root = new node("/", null);
+		node route = root;
+		boolean lsStatus = false;
+		
+		while (sc.hasNextLine()) {	
+			String input = sc.nextLine();
+			if(input.charAt(0) == '$') {
+				lsStatus=false;
+				String cmd = input.substring(2, 4);
+				if(cmd.equals("cd")) {
+					route = cdRun(route, root, input.substring(5, input.length()));
+				} else if(cmd.equals("ls")) {
+					lsStatus = true;
+				}
+			} else if(lsStatus) {
+				if(input.substring(0, 3).equals("dir")) {
+					route.addChild(input.substring(4, input.length()), route);
+				} else {
+					int size = Integer.parseInt(input.substring(0, input.indexOf(" ")));
+					String name = input.substring(input.indexOf(" ")+1, input.length());
+					route.addFile(name, size, route);
+				}
+			}		
 		}
+		sc.close();
 		
-		cmd commands[] = new cmd[5];
-		
-		cmd cd = new cmd("cd");
-		
-		for(int i=0; i<data.size(); i++) {
-			if(data.elementAt(i).charAt(0) == '$') {
-				
+//		node root = new node("/", null);
+//		
+//		root.addChild("a", root);
+//		root.addChild("b", root);
+//		root.addFile("Matrioska.txt", 233413, root);
+//
+//		lsRun(root);
+//		mostrarVector("~ ", data);
+	}
+	
+	static node cdRun(node route, node root, String to) {
+		if(to.equals("/")) {
+			return root;
+		} else if(to.equals("..")) {
+			route = route.parent;
+			return route;
+		} else {
+			for(node current : route.childs) {
+				if(current.name.equals(to)) {
+					return current;
+				}
 			}
-					
+		}
+		return root;
+	}
+	
+	static void lsRun(node route) {
+		for(int i=0; i<route.childs.size(); i++) {
+			System.out.println(route.childs.elementAt(i).name + " (dir)");
 		}
 		
-		mostrarVector("~ ", data);
+		for(int i=0; i<route.files.size(); i++) {
+			System.out.println(route.files.elementAt(i).size + " " + route.files.elementAt(i).name);
+		}		
 	}
-	
-	static Vector<String> parser(Scanner sc, Vector<String> v, String regex) {
-		String temp = "";
 
-		try {
-			sc.skip(regex);
-			temp = sc.nextLine();
-			if(temp.charAt(0)=='$')
-				v.addElement(temp);
-			else
-				d.addElement(temp);
-			v.addElement(temp);
-		} catch (NoSuchElementException e) {
-			System.out.println(e);
-		}
-		return v;
-	}
-	
 	static void mostrarVector(String msj, Vector<String> a) {
-		for(int i=0; i<a.size(); i++) {
+		for (int i = 0; i < a.size(); i++) {
 			System.out.print(msj);
 			System.out.println(a.elementAt(i));
 		}
 	}
-	
-	
 
 }
