@@ -22,7 +22,7 @@ public class Solution_Part1 {
 		markSize = Integer.valueOf(in.readLine());
 		System.out.println();
 		
-		FileInputStream f = new FileInputStream("C:/Users/Nacho/git/adventOfCode2022/adventOfCode2022/src/day6/Input.txt");
+		FileInputStream f = new FileInputStream("/home/nafdez/git/adventOfCode2022/adventOfCode2022/src/day6/Input.txt");
 		Scanner sc = new Scanner(f);
 		
 		Vector<Character> stream = new Vector<>();
