@@ -7,11 +7,15 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Vector;
 
+/*
+* Probando Visual Studio Code
+*/
+
 public class Main {
 	public static void main(String[] args) {
 		FileInputStream f = null;
 		try {
-			f = new FileInputStream("C:/Users/Nacho/git/adventOfCode2022/adventOfCode2022/src/day8/Input.txt");
+			f = new FileInputStream("/home/nafdez/git/adventOfCode2022/adventOfCode2022/src/day8/Input_test.txt");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
