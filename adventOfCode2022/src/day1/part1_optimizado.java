@@ -1,22 +1,16 @@
 package day1;
 
-// Linux
-// /home/nafdez/git/adventOfCode2022/adventOfCode2022/src/day1/part1_Input.txt
-// Windows
-// C:/Users/Nacho/git/adventOfCode2022/adventOfCode2022/src/day1/part1_Input.txt
-// 70369
-
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Vector;
-import java.util.concurrent.ConcurrentHashMap;
 
-public class Part1_Solution {
+// 70369 Resultado
 
-	public static void main(String[] args) throws FileNotFoundException {
+public class part1_optimizado {
+
+	public static void main(String[] args) {
 		try {
 			FileInputStream file = new FileInputStream(
 					"/home/nafdez/git/adventOfCode2022/adventOfCode2022/src/day1/part1_Input.txt");
@@ -27,10 +21,14 @@ public class Part1_Solution {
 				data.addElement(temp);
 			}
 			scanner.close();
+			long t0 = System.nanoTime();
+			int [] resultado = elfsSum(data); // Original: 3'2 ms
+			long t1 = System.nanoTime();
 			
-			int [] resultado = insercionDirecta(elfsSum(data));
+			Arrays.sort(resultado); // Usando Arrays.sort instead of mi propio método de ordenación, hago que ordenar el array sea unas 10 veces más rápido
 			
 			System.out.println("El elfo con más calorías es: " + resultado[resultado.length - 1]);
+			System.out.println("Tiempo de ejecución para sumar todos los elementos a la vez que se de un vector pasamos a un array: " + (t1-t0)/1e6 + " ms.");
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -46,36 +44,20 @@ public class Part1_Solution {
 		int x = 0;
 
 		do {
-			if (v.elementAt(c) != "" && c <= v.size() - 1) {
+			if (v.elementAt(c) != "" && c < v.size()) {
 				suma += Integer.parseInt(v.elementAt(c++));
 			}
-			if (v.elementAt(c) == "" && c <= v.size() - 1) {
-				result[x] = suma;
-				x++;
+			if (v.elementAt(c) == "" && c < v.size()) {
+				result[x++] = suma;
 				c++;
 				suma = 0;
-			} else if (c >= v.size() - 1) {
+			} else if (c >= v.size()-1) {
 				fin = true;
 			}
 		} while (!fin);
 
 		return result;
 
-	}
-
-	static int[] insercionDirecta(int[] v) {
-		for (int i = 1; i < v.length; i++) {
-			int j = 0;
-			while (j < i && v[j] < v[i])
-				j++;
-			if (j < i) {
-				int aux = v[i];
-				for (int k = i - 1; k >= j; k--)
-					v[k + 1] = v[k];
-				v[j] = aux;
-			}
-		}		
-		return v;
 	}
 
 }

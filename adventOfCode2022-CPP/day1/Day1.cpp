@@ -16,13 +16,22 @@ int main(){
 
 	string line;
 	int c;
-	int in[1000];
+	int in[10];
 	int sum;
 	int cal;
 
 	// Obteniendo una línea del archivo y almacenarla en la variable "line"
 	while(getline(file, line)) {
-		in[c] = static_cast<int>(line);
+		
+		if((line != "") && (line != " ") && (line != "\n")){
+			int n = stoi(line);
+			in[c] = n;
+			cout << n << endl;
+		} else
+		{
+			in[c] = 0;
+		}
+		c++;
 	}
 
 	for(int i = 0; i<sizeof(in); i++) {
