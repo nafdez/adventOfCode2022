@@ -1,7 +1,5 @@
-package day2;
+package aoc2022;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -11,7 +9,7 @@ import java.util.Vector;
  * []Input txt
  */
 
-public class Part1_Solution {
+public class Day2 {
 
 	public static void main(String[] args) {
 		int player1 = 0;
@@ -23,21 +21,15 @@ public class Part1_Solution {
 		// index "0" for opponent move and "1" for yours
 		char[][] moves = { { 'A', 'X' }, { 'B', 'Y' }, { 'C', 'Z' } };
 
-		try {
-			FileInputStream file = new FileInputStream(
-					"C:/Users/Nacho/git/adventOfCode2022/adventOfCode2022/src/day2/Input.txt");
-			Scanner scanner = new Scanner(file);
-			Vector<String> data = new Vector<>();
-			while (scanner.hasNextLine()) {
-				String temp = scanner.nextLine();
-				data.addElement(temp);
-			}
-
-			calcularMoves(data, moves, player1, player2);
-			scanner.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		Scanner scanner = new Scanner(Day2.class.getResourceAsStream("/2022/day2Input.txt"));
+		Vector<String> data = new Vector<>();
+		while (scanner.hasNextLine()) {
+			String temp = scanner.nextLine();
+			data.addElement(temp);
 		}
+
+		calcularMoves(data, moves, player1, player2);
+		scanner.close();
 
 	}
 

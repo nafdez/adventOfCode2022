@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Day1 {
 
 	public static void main(String[] args) {
-		try (Scanner sc = new Scanner(Day1.class.getResourceAsStream("/day1Input.txt"))) {
+		try (Scanner sc = new Scanner(Day1.class.getResourceAsStream("/2021/day1Input.txt"))) {
 
 			ArrayList<Integer> measures = new ArrayList<>();
 

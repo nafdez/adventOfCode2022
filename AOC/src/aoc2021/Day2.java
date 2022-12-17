@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Day2 {
 
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(Day2.class.getResourceAsStream("/day2Input.txt"));
+		Scanner sc = new Scanner(Day2.class.getResourceAsStream("/2021/day2Input.txt"));
 
 		int horizontalPos = 0; // Part One
 		int depth = 0;
