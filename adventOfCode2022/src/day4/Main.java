@@ -1,6 +1,5 @@
 package day4;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
@@ -8,40 +7,34 @@ import java.util.Vector;
 
 public class Main {
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws FileNotFoundException, IOException {
 		int c = 0;
-		try {
-			FileInputStream file = new FileInputStream(
-					"C:/Users/Nacho/git/adventOfCode2022/adventOfCode2022/src/day4/Input.txt");
-			Scanner scanner = new Scanner(file);
-			Vector<String> data = new Vector<>();
-			while (scanner.hasNext()) {
-				String temp = scanner.nextLine().replaceAll(",", "-");
-				data.addElement(temp);
-				c++;
-			}
-			int[][] intData = toInt(data, c);
-
-			int partOverlaps = 0;
-			int fullOverlaps = 0;
-			for (int i = 0; i < intData.length; i++) {
-				String par1 = zoneToClean(intData, i, 2);
-				String par2 = zoneToClean(intData, i, 1);
-				
-				if (fullyOverlaps(intData, i))
-					fullOverlaps++;
-				
-				if (overlaps(par1, par2, intData, i))
-					partOverlaps++;
-			}
-			
-			System.out.println("La cantidad de superposiciones TOTALES entre las parejas son: " + fullOverlaps);
-			System.out.println("La cantidad de superposiciones entre las parejas son: " + (partOverlaps));
-
-			scanner.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		Scanner scanner = new Scanner(Main.class.getResourceAsStream("Input.txt"));
+		Vector<String> data = new Vector<>();
+		while (scanner.hasNext()) {
+			String temp = scanner.nextLine().replaceAll(",", "-");
+			data.addElement(temp);
+			c++;
 		}
+		int[][] intData = toInt(data, c);
+		
+		int partOverlaps = 0;
+		int fullOverlaps = 0;
+		for (int i = 0; i < intData.length; i++) {
+			String par1 = zoneToClean(intData, i, 2);
+			String par2 = zoneToClean(intData, i, 1);
+						
+			if (fullyOverlaps(intData, i))
+				fullOverlaps++;
+						
+			if (overlaps(par1, par2, intData, i))
+				partOverlaps++;
+		}
+					
+		System.out.println("La cantidad de superposiciones TOTALES entre las parejas son: " + fullOverlaps);
+		System.out.println("La cantidad de superposiciones entre las parejas son: " + (partOverlaps));
+		
+		scanner.close();
 
 	}
 
