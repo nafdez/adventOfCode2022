@@ -1,44 +1,46 @@
 package aoc2021;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Day4 {
 
 	public static void main(String[] args) {
-		
+		Pattern pOnlyNumbers = Pattern.compile("^\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)$");
 		Scanner sc = new Scanner(Day4.class.getResourceAsStream("/2021/test/day4Input.txt"));
-		ArrayList<ArrayList<String>> tempBoard = new ArrayList<>();
-		ArrayList<ArrayList<ArrayList<String>>> bingomocho = new ArrayList<>();
-		
-//		while(sc.hasNextLine()) {
-			// parsear los números ganadores
-			boardParser(sc, tempBoard);
-			bingomocho.add(tempBoard);
-//		}
-		
-		for(int i = 0; i < tempBoard.size(); i++) { // Recorremos el array contenedor de matrices - Vector de matrices
-			for(int j = 0; i < tempBoard.get(i).size(); j++) { // Ahora empezamos a recorrer cada una de las tablas - Vector de vectores
-				System.out.println(tempBoard.get(i));
-			}
-		}
-		
-	}
-	
-	static void boardParser(Scanner sc, ArrayList<ArrayList<String>> board) {
-		ArrayList<String> tempArray = new ArrayList<>();
+		ArrayList<int[][]> bingomocho = new ArrayList<>();
 		while(sc.hasNextLine()) {
-			lineBorderParser(sc, tempArray);
-			board.add(tempArray);
+			bingomocho.add(boardParser(sc, pOnlyNumbers));
 		}
+		
 	}
 	
-	static void lineBorderParser(Scanner sc, ArrayList<String> line) {
-		String temp = sc.nextLine();
-		temp = temp.replaceAll(" ", "-").replaceAll("--", "-");
-		String[] tempStrArray = temp.split("-");
-		for(String i : tempStrArray)
-			line.add(i);
+	static int[][] boardParser(Scanner sc, Pattern p) {
+		int[][] board = new int[5][5];
+		String temp = "";
+		int counter = 0;
+		
+		while(sc.hasNextLine()) {
+			temp = sc.nextLine();
+			Matcher m = p.matcher(temp);
+			int counterGroup = 1;
+			if(m.find()) {
+				for(int i = 0; i<board[counter].length; i++) {
+					board[counter][i] = Integer.valueOf(m.group(counterGroup++));
+				}
+			}
+			if(counter<5)
+				counter++;
+			else
+				counter=0;
+		}
+		for(int[] i : board)
+			System.out.println(Arrays.toString(i));
+		
+		return board;
 	}
 
 }
