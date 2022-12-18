@@ -3,6 +3,8 @@ package aoc2021;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+// Pasé de la parte dos, menudo coñazo
+
 public class Day3 {
 
 	public static void main(String[] args) {
