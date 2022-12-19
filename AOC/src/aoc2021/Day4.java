@@ -23,7 +23,7 @@ public class Day4 {
 		String temp = "";
 		int counter = 0;
 		
-		while(sc.hasNextLine()) {
+		while(sc.hasNext()) {
 			temp = sc.nextLine();
 			Matcher m = p.matcher(temp);
 			int counterGroup = 1;
