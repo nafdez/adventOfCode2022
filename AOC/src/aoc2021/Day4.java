@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Day4JAJA {
+public class Day4 {
 
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(Day4JAJA.class.getResourceAsStream("/2021/day4Input.txt"));
+		Scanner sc = new Scanner(Day4.class.getResourceAsStream("/2021/day4Input.txt"));
 //		ArrayList<String> winners = new ArrayList<>();
 		ArrayList<String[][]> bingomocho = new ArrayList<>();
 
