@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Day4 {
 
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(Day4.class.getResourceAsStream("/2021/day4Input.txt"));
+		Scanner sc = new Scanner(Day4.class.getResourceAsStream("/2021/test/day4Input.txt"));
 //		ArrayList<String> winners = new ArrayList<>();
 		ArrayList<String[][]> bingomocho = new ArrayList<>();
 
@@ -89,7 +89,6 @@ public class Day4 {
 			if (i.matches("\\d+\\*"))
 				count++;
 		}
-
 		if (count == 5)
 			bingo = true;
 
