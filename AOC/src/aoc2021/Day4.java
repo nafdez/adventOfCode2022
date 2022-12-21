@@ -5,18 +5,15 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Day4 {
-
+	static int numWinner = 0;
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(Day4.class.getResourceAsStream("/2021/test/day4Input.txt"));
+		Scanner sc = new Scanner(Day4.class.getResourceAsStream("/2021/day4Input.txt"));
 //		ArrayList<String> winners = new ArrayList<>();
 		ArrayList<String[][]> bingomocho = new ArrayList<>();
 
 		// Almacenamos los números ganadores en un string
 		String[] winners = sc.nextLine().split(","); // Esto se consigue leyendo la línea y usando ".split()", dando una
 														// coma como argumento
-
-//		System.out.println(Arrays.toString(winners));
-//		System.out.println();
 
 		// Almacenamos en un array cada línea de la tabla mediante un bucle, y después
 		// añadimos este al array de tablas
@@ -28,14 +25,16 @@ public class Day4 {
 			}
 			bingomocho.add(board);
 		}
-//		printArrayList(bingomocho);
 
-		int winner = checkWinner(winners, bingomocho);
-
-		System.out.println("¡¡El ganador es el participante número " + (winner + 1) + "!!");
-		printArrayList(winner, bingomocho);
-
-		System.out.println("Total score: " + (sumUnchecked(bingomocho.get(winner)) * 24));
+		String[][] winner = checkWinner(winners, bingomocho);
+		
+		if(winner != null) {
+			System.out.println("¡¡La llamada ganadora es el número " + numWinner + "!!");
+			printArrayList(winner);
+			System.out.println("Total score: " + (sumUnchecked(winner)*numWinner));
+		} else 
+			System.out.println("No se ha encontrado ningún ganador.");
+		
 
 	}
 
@@ -48,58 +47,80 @@ public class Day4 {
 		return line;
 	}
 
-	static int checkWinner(String[] n, ArrayList<String[][]> matrixVector) {
-		int winner = -1;
+	static String[][] checkWinner(String[] n, ArrayList<String[][]> matrixVector) {
+		String[][] winner = null;
 		// Recorre la lista de números ganadores y asigna el valor a "element"
 		for (String element : n) {
-			winner = recorrerTablero(matrixVector, element);
-			if(winner > -1) // Comprueba si todavía no hay bingo, si lo hay, retorna el tablero ganador
+			winner = recorrerTableros(matrixVector, element);
+			if (winner != null) { // Comprueba si todavía no hay bingo, si lo hay, retorna el tablero ganador
+				numWinner = Integer.parseInt(element);
 				return winner;
 		}
-		return -1;
+		}
+		return null;
 	}
 
-	static int recorrerTablero(ArrayList<String[][]> v, String element) {
+	static String[][] recorrerTableros(ArrayList<String[][]> v, String element) {
 		// Recorre el vector de tableros >> El index de cada tablero es almacenado en
 		// "i"
-		for (int i = 0; i < v.size(); i++) {
+		for (String[][] board : v) {
 			// Recorre el tablero >> El index de cada línea es almacenado en "j"
-			for (int j = 0; j < v.get(i).length; j++) {
+			for (int j = 0; j < board.length; j++) {
 				// Recorre las líneas de los tableros >> El index del valor es almacenado en "l"
-				for (int l = 0; l < v.get(i)[j].length; l++) {
-					checkAndMark(v, element, i, j, l);
-					if (isBingo(v.get(i)[j]))
-						return i; // Si hay bingo, devuelve el número del tablero en el que estaba
+				for (int l = 0; l < board[j].length; l++) {
+					if (checkAndMark(element, board, j, l) && isBingo(board, j, l)) {
+						return board; // Si hay bingo, devuelve el número del tablero en el que estaba
+					}
+						
 				}
 			}
 		}
-		return -1; // Si no hay bingo, devuelve -1
+		return null; // Si no hay bingo, devuelve -1
 	}
 
-	static void checkAndMark(ArrayList<String[][]> v, String element, int posBoard, int posLine, int posValue) {
-		if (v.get(posBoard)[posLine][posValue].equals(element)) {
-			v.get(posBoard)[posLine][posValue] += "*";
+	static boolean checkAndMark(String element, String[][] board, int posLine, int posValue) {
+		if (board[posLine][posValue].equals(element)) {
+			board[posLine][posValue] += "*";
+			return true;
 		}
+		return false;
 	}
 
-	static boolean isBingo(String[] line) {
+	static boolean isBingo(String[][] board, int f, int c) {
 		boolean bingo = false;
-		int count = 0;
-		for (String i : line) {
-			if (i.matches("\\d+\\*"))
-				count++;
+
+		int[][] filasColumnas = { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 } };
+
+		for (int i = 0; i < board.length; i++) {
+			if (board[i][c].matches("\\d+\\*"))
+				filasColumnas[1][i] = 1;
 		}
-		if (count == 5)
+
+		for (int i = 0; i < board[f].length; i++) {
+			if (board[f][i].matches("\\d+\\*"))
+				filasColumnas[0][i] = 1;
+		}
+		
+		int sumaFilas = 0;
+		int sumaColumnas = 0;
+		
+		for(int i : filasColumnas[0])
+			sumaFilas += i;
+		
+		for(int i : filasColumnas[1])
+			sumaColumnas += i;
+		
+		if (sumaFilas == 5 || sumaColumnas == 5)
 			bingo = true;
 
 		return bingo;
 
 	}
 
-	static int sumUnchecked(String[][] matrix) {
+	static int sumUnchecked(String[][] board) {
 		int suma = 0;
-		for (String[] element : matrix) {
-			for (String j : element) {
+		for (String[] i : board) {
+			for (String j : i) {
 				if (!j.matches("\\d+\\*"))
 					suma += Integer.parseInt(j);
 			}
@@ -116,9 +137,9 @@ public class Day4 {
 		}
 	}
 
-	static void printArrayList(int index, ArrayList<String[][]> a) {
-		for (int j = 0; j < a.get(index).length; j++) {
-			System.out.println(Arrays.toString(a.get(index)[j]));
+	static void printArrayList(String[][] board) {
+		for (int j = 0; j < board.length; j++) {
+			System.out.println(Arrays.toString(board[j]));
 		}
 		System.out.println();
 	}
