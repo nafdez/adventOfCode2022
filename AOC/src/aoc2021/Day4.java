@@ -25,11 +25,13 @@ public class Day4 {
 			}
 			bingomocho.add(board);
 		}
-
-		String[][] winner = checkWinner(winners, bingomocho);
+		
+		String[][] winner = null;
+		
+		winner = checkWinner(winners, bingomocho);
+		
 		
 		if(winner != null) {
-			System.out.println("¡¡La llamada ganadora es el número " + numWinner + "!!");
 			printArrayList(winner);
 			System.out.println("Total score: " + (sumUnchecked(winner)*numWinner));
 		} else 
@@ -49,9 +51,10 @@ public class Day4 {
 
 	static String[][] checkWinner(String[] n, ArrayList<String[][]> matrixVector) {
 		String[][] winner = null;
+		int numWins = 0;
 		// Recorre la lista de números ganadores y asigna el valor a "element"
 		for (String element : n) {
-			winner = recorrerTableros(matrixVector, element);
+			winner = recorrerTableros(matrixVector, element, numWins);
 			if (winner != null) { // Comprueba si todavía no hay bingo, si lo hay, retorna el tablero ganador
 				numWinner = Integer.parseInt(element);
 				return winner;
@@ -60,7 +63,7 @@ public class Day4 {
 		return null;
 	}
 
-	static String[][] recorrerTableros(ArrayList<String[][]> v, String element) {
+	static String[][] recorrerTableros(ArrayList<String[][]> v, String element, int nWins) {
 		// Recorre el vector de tableros >> El index de cada tablero es almacenado en
 		// "i"
 		for (String[][] board : v) {
