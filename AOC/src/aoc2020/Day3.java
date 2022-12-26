@@ -37,8 +37,11 @@ public class Day3 {
 	}
 	
 	static int busCaminos(ArrayList<String> m, int pasoX, int pasoY) {
-		ArrayList<String> map = new ArrayList<>();
-		map = m;
+		String[] map = new String[m.size()]; // Covierto a String[] porque no se como borrar el ArrayList después de cada resultado jajjaja
+		for(int i = 0; i < map.length; i++) {
+				map[i] = m.get(i);
+		}
+		
 		boolean bottomReached = false;
 		int x = 0;
 		int y = 0;
@@ -46,25 +49,27 @@ public class Day3 {
 		while(!bottomReached) {
 			x += pasoX;
 			y += pasoY;
-			if(x >= map.get(y).length())
-				x -= map.get(y).length();
+			if(x >= map[y].length())
+				x -= map[y].length();
 			
-			char xYAxis = map.get(y).charAt(x);
-			String yAxis = map.get(y);
+			char xYAxis = map[y].charAt(x);
+			String yAxis = map[y];
 			if(xYAxis == '.') {
 				 yAxis = yAxis.substring(0, x) + "O" + yAxis.substring(x+1);
 			} else if(xYAxis == '#'){
 				yAxis = yAxis.substring(0, x) + "X" + yAxis.substring(x+1);
 			}
 			
-			map.set(y, yAxis);
-			if(y == map.size()-1)
+			map[y] = yAxis;
+			if(y == map.length-1)
 				bottomReached = true;
 		}
-		return cuantosArboles(map);
+		
+		int result = cuantosArboles(map);
+		return result;
 	}
 	
-	static int cuantosArboles(ArrayList<String> m) {
+	static int cuantosArboles(String[] m) {
 		int count = 0;
 		for(String i : m) {
 			for(int j = 0; j < i.length(); j++) {
