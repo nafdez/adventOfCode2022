@@ -11,14 +11,13 @@ public class Day4 {
 		Pattern p = Pattern.compile("([a-z]{3}):");
 		ArrayList<String> passports = new ArrayList<>();
 		String line = "";
-		while(sc.hasNextLine()) {
-			line = sc.nextLine();
-			
-			if(line != "\n") {
-				
-			}
-			
+		ArrayList<String> values = new ArrayList<>();
+		while(sc.hasNextLine()) {			
+			values.add(sc.next("[a-z]{3}:"));
 		}
+		
+		for(String i : values)
+			System.out.println(i);
 	}
 
 }
