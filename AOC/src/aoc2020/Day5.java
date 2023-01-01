@@ -1,5 +1,6 @@
 package aoc2020;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Day5 {
@@ -10,6 +11,8 @@ public class Day5 {
 		int highestSeat = 0;
 		int boardPassSeat = 0;
 		
+		ArrayList<Integer> passCodes = new ArrayList<>(); // Almacenando para la part two
+		
 		while(sc.hasNextLine()) {
 			String pass = sc.nextLine();
 			
@@ -19,11 +22,31 @@ public class Day5 {
 			
 			boardPassSeat = resultFrontBack * 8 + resultRightLeft;
 			
+			passCodes.add(boardPassSeat);
+			
 			if(boardPassSeat > highestSeat)
 				highestSeat = boardPassSeat;
 		}
 		
 		System.out.println("[Part_One]: " + highestSeat);
+		
+		/****Part Two****/
+		
+		passCodes.sort(null);
+		int avalaibleSeat = 0;
+		
+		for(int i = 1; i < passCodes.size()-1; i++) {
+			int previousSeat = passCodes.get(i-1);
+			int nextSeat = passCodes.get(i+1);
+			
+			if((passCodes.get(i) - previousSeat) > 1) {
+				avalaibleSeat= passCodes.get(i) - 1;
+			} else if ((nextSeat - passCodes.get(i)) > 1) {
+				avalaibleSeat = passCodes.get(i) + 1;
+			}			
+		}
+		
+		System.out.println("[Part_Two] The only avalaible seat is the number " + avalaibleSeat);
 		
 	}
 	
